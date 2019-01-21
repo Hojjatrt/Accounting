@@ -1,2 +1,2 @@
 # Accounting
-an Accounting program (with sqlite database)
+a simple GUI Accounting program (with sqlite database)
