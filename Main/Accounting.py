@@ -1,21 +1,26 @@
 from GUI import ui
-from database import Database
+from database.Database import Database
+db = Database()
 
 
 class Accounting:
     def __init__(self, name='test', purchase_price=0, sales_price=0):
+        self.id = 0
         self.name = name
         self.purchase_price = purchase_price
         self.sales_price = sales_price
 
     def insert(self):
-        pass
+        global db
+        db.insert(self)
 
     def update(self):
-        pass
+        global db
+        db.update(self)
 
     def delete(self):
-        pass
+        global db
+        db.delete(self)
 
     def __str__(self):
         return str(self.name)
