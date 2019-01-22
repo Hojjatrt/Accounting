@@ -34,7 +34,7 @@ class Database:
                             (product.name, product.purchase_price, product.sales_price))
         self.conn.commit()
 
-    def select(self, q):
+    def select(self, q=''):
         if q == '':
             data = self.cursor.execute("""select * from products ORDER BY name;""")
         else:
