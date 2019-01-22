@@ -22,5 +22,11 @@ class Accounting:
         global db
         db.delete(self)
 
+    def select(self, q=''):
+        global db
+        data = db.select(q)
+        return data
+
     def __str__(self):
         return str(self.name)
+
