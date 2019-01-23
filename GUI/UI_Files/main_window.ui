@@ -141,7 +141,17 @@
       </column>
       <column>
        <property name="text">
+        <string>شناسه</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
         <string>قیمت خرید</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>درصد</string>
        </property>
       </column>
       <column>
@@ -152,19 +162,53 @@
      </widget>
     </item>
     <item>
-     <widget class="QPushButton" name="btn_main_exit">
-      <property name="font">
-       <font>
-        <family>Arial</family>
-        <pointsize>12</pointsize>
-        <weight>75</weight>
-        <bold>true</bold>
-       </font>
-      </property>
-      <property name="text">
-       <string>خروج</string>
-      </property>
-     </widget>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="QPushButton" name="btn_main_add">
+        <property name="font">
+         <font>
+          <family>Arial</family>
+          <pointsize>12</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>افزودن</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_main_update">
+        <property name="font">
+         <font>
+          <family>Arial</family>
+          <pointsize>12</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>ویرایش</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_main_exit">
+        <property name="font">
+         <font>
+          <family>Arial</family>
+          <pointsize>12</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>خروج</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </item>
    </layout>
   </widget>
@@ -191,6 +235,7 @@
     <property name="title">
      <string>خروج</string>
     </property>
+    <addaction name="separator"/>
    </widget>
    <addaction name="menu"/>
    <addaction name="menu_exit"/>

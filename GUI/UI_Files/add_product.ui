@@ -96,20 +96,38 @@
         </font>
        </property>
        <property name="text">
-        <string>قیمت فروش : </string>
+        <string>درصد فروش : </string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="txt_sales_price">
+      <widget class="QLineEdit" name="txt_sales_percent">
        <property name="inputMethodHints">
         <set>Qt::ImhDigitsOnly|Qt::ImhPreferNumbers</set>
        </property>
+       <property name="text">
+        <string/>
+       </property>
        <property name="maxLength">
-        <number>11</number>
+        <number>3</number>
        </property>
        <property name="placeholderText">
-        <string>123456</string>
+        <string>20</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_6">
+       <property name="font">
+        <font>
+         <family>Arial</family>
+         <pointsize>12</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>%</string>
        </property>
       </widget>
      </item>
