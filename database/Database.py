@@ -9,7 +9,8 @@ class Database:
 
     def create_database(self):
         self.cursor.execute("""create table IF NOT EXISTS products(id INTEGER PRIMARY KEY NOT NULL ,
-                            name VARCHAR(60) NOT NULL , purchase_price INTEGER , sales_price INTEGER)""")
+                            name VARCHAR(60) NOT NULL , purchase_price INTEGER , sales_price INTEGER , 
+                            percent INTEGER)""")
 
     def insert(self, product):
         data = self.cursor.execute("""select max(id) from products""").fetchone()
@@ -17,16 +18,15 @@ class Database:
             id = int(data[0]) + 1
         else:
             id = 1
-        self.cursor.execute("""insert into products VALUES (?, ?, ?, ?);""", (id, product.name,
-                                                                              product.purchase_price,
-                                                                              product.sales_price))
+        self.cursor.execute("""insert into products VALUES (?, ?, ?, ?, ?);""",
+                            (id, product.name, product.purchase_price, product.sales_price, product.percent))
         product.id = id
         self.conn.commit()
 
     def update(self, product):
-        self.cursor.execute("""update products Set name=? & purchase_price=? & sales_price=?
+        self.cursor.execute("""update products Set name=? & purchase_price=? & sales_price=? & percent=?
                             WHERE id=?;""", (product.name, product.purchase_price,
-                                            product.sales_price, product.id))
+                                             product.sales_price, product.percent, product.id))
         self.conn.commit()
 
     def delete(self, product):
