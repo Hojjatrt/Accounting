@@ -38,7 +38,7 @@
        </font>
       </property>
       <property name="text">
-       <string>سه شنبه 1397/11/11  22:22</string>
+       <string>.....</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>

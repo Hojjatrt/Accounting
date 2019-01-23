@@ -41,7 +41,14 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="txt_product_name"/>
+      <widget class="QLineEdit" name="txt_product_name">
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+       </property>
+       <property name="placeholderText">
+        <string>محصول</string>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
@@ -63,7 +70,20 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="txt_purchase_price"/>
+      <widget class="QLineEdit" name="txt_purchase_price">
+       <property name="inputMethodHints">
+        <set>Qt::ImhDigitsOnly|Qt::ImhPreferNumbers</set>
+       </property>
+       <property name="inputMask">
+        <string/>
+       </property>
+       <property name="maxLength">
+        <number>11</number>
+       </property>
+       <property name="placeholderText">
+        <string>123456</string>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QLabel" name="label_5">
@@ -81,7 +101,17 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="txt_sales_price"/>
+      <widget class="QLineEdit" name="txt_sales_price">
+       <property name="inputMethodHints">
+        <set>Qt::ImhDigitsOnly|Qt::ImhPreferNumbers</set>
+       </property>
+       <property name="maxLength">
+        <number>11</number>
+       </property>
+       <property name="placeholderText">
+        <string>123456</string>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>

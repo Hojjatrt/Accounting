@@ -122,7 +122,7 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "حسابداری"))
-        self.lbl_datetime.setText(_translate("MainWindow", "سه شنبه 1397/11/11  22:22"))
+        self.lbl_datetime.setText(_translate("MainWindow", "....."))
         self.label.setText(_translate("MainWindow", "نام محصول : "))
         item = self.tableWidget.horizontalHeaderItem(0)
         item.setText(_translate("MainWindow", "نام محصول"))
