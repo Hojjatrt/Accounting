@@ -9,6 +9,16 @@ class Product:
     def insert(self, db):
         db.insert(self)
 
+    @staticmethod
+    def search(db, id):
+        product = db.search(id)
+        if product:
+            p = Product(name=product[1], purchase_price=product[2], percent=product[4])
+            p.id = product[0]
+            return p
+        else:
+            return False
+
     def update(self, db):
         db.update(self)
 
