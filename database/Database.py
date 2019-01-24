@@ -24,7 +24,7 @@ class Database:
         self.conn.commit()
 
     def update(self, product):
-        self.cursor.execute("""update products Set name=? & purchase_price=? & sales_price=? & percent=?
+        self.cursor.execute("""update products Set name=? , purchase_price=? , sales_price=? , percent=?
                             WHERE id=?;""", (product.name, product.purchase_price,
                                              product.sales_price, product.percent, product.id))
         self.conn.commit()
@@ -42,4 +42,10 @@ class Database:
             data = self.cursor.execute("""select * from products WHERE name LIKE ? ORDER BY name;""",
                                        arg)
         data = data.fetchall()
+        return data
+
+    def search(self, id):
+        data = self.cursor.execute("""select * from products
+                                   WHERE id=?;""", (id,))
+        data = data.fetchone()
         return data
