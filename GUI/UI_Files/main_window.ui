@@ -68,6 +68,37 @@
       <item>
        <widget class="QLineEdit" name="txt_main_search_name"/>
       </item>
+      <item>
+       <widget class="QToolButton" name="btn_main_refresh">
+        <property name="minimumSize">
+         <size>
+          <width>25</width>
+          <height>25</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>Arial</family>
+          <pointsize>10</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>بازخوانی</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>refresh24x24.png</normaloff>refresh24x24.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>25</width>
+          <height>25</height>
+         </size>
+        </property>
+       </widget>
+      </item>
      </layout>
     </item>
     <item>
