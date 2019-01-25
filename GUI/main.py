@@ -177,6 +177,7 @@ class MainWindow(QMainWindow):
 
     def _connect(self):
         self._window.txt_main_search_name.textChanged.connect(self.search)
+        self._window.btn_main_refresh.clicked.connect(self.search)
         self._window.menu_exit.triggered.connect(self.exit)
         self._window.btn_main_exit.clicked.connect(self.exit)
         self._window.btn_main_add.clicked.connect(self.show_add_dialog)
