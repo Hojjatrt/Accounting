@@ -1,0 +1,90 @@
+# -*- coding: utf-8 -*-
+
+# Form implementation generated from reading ui file 'password_update.ui'
+#
+# Created by: PyQt5 UI code generator 5.11.3
+#
+# WARNING! All changes made in this file will be lost!
+
+from PyQt5 import QtCore, QtGui, QtWidgets
+
+class Ui_password_dialog(object):
+    def setupUi(self, password_dialog):
+        password_dialog.setObjectName("password_dialog")
+        password_dialog.resize(400, 300)
+        password_dialog.setMinimumSize(QtCore.QSize(400, 300))
+        password_dialog.setLayoutDirection(QtCore.Qt.RightToLeft)
+        self.verticalLayout = QtWidgets.QVBoxLayout(password_dialog)
+        self.verticalLayout.setObjectName("verticalLayout")
+        self.horizontalLayout = QtWidgets.QHBoxLayout()
+        self.horizontalLayout.setObjectName("horizontalLayout")
+        self.label = QtWidgets.QLabel(password_dialog)
+        font = QtGui.QFont()
+        font.setFamily("Arial")
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        self.label.setFont(font)
+        self.label.setObjectName("label")
+        self.horizontalLayout.addWidget(self.label)
+        self.txt_old_pass = QtWidgets.QLineEdit(password_dialog)
+        self.txt_old_pass.setText("")
+        self.txt_old_pass.setMaxLength(10)
+        self.txt_old_pass.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.txt_old_pass.setObjectName("txt_old_pass")
+        self.horizontalLayout.addWidget(self.txt_old_pass)
+        self.verticalLayout.addLayout(self.horizontalLayout)
+        self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
+        self.label_4 = QtWidgets.QLabel(password_dialog)
+        font = QtGui.QFont()
+        font.setFamily("Arial")
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_4.setFont(font)
+        self.label_4.setObjectName("label_4")
+        self.horizontalLayout_2.addWidget(self.label_4)
+        self.txt_new_pass = QtWidgets.QLineEdit(password_dialog)
+        self.txt_new_pass.setInputMethodHints(QtCore.Qt.ImhDigitsOnly|QtCore.Qt.ImhPreferNumbers)
+        self.txt_new_pass.setInputMask("")
+        self.txt_new_pass.setMaxLength(10)
+        self.txt_new_pass.setObjectName("txt_new_pass")
+        self.horizontalLayout_2.addWidget(self.txt_new_pass)
+        self.verticalLayout.addLayout(self.horizontalLayout_2)
+        self.horizontalLayout_3 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_3.setObjectName("horizontalLayout_3")
+        self.btn_save = QtWidgets.QPushButton(password_dialog)
+        self.btn_save.setMinimumSize(QtCore.QSize(50, 0))
+        font = QtGui.QFont()
+        font.setFamily("Arial")
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        self.btn_save.setFont(font)
+        self.btn_save.setObjectName("btn_save")
+        self.horizontalLayout_3.addWidget(self.btn_save)
+        self.btn_exit = QtWidgets.QPushButton(password_dialog)
+        font = QtGui.QFont()
+        font.setFamily("Arial")
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        self.btn_exit.setFont(font)
+        self.btn_exit.setObjectName("btn_exit")
+        self.horizontalLayout_3.addWidget(self.btn_exit)
+        self.verticalLayout.addLayout(self.horizontalLayout_3)
+
+        self.retranslateUi(password_dialog)
+        QtCore.QMetaObject.connectSlotsByName(password_dialog)
+
+    def retranslateUi(self, password_dialog):
+        _translate = QtCore.QCoreApplication.translate
+        password_dialog.setWindowTitle(_translate("password_dialog", "تغییر رمز عبور"))
+        self.label.setText(_translate("password_dialog", "رمز عبور فعلی :"))
+        self.txt_old_pass.setPlaceholderText(_translate("password_dialog", "رمز فعلی"))
+        self.label_4.setText(_translate("password_dialog", "رمز عبور جدید :"))
+        self.txt_new_pass.setPlaceholderText(_translate("password_dialog", "رمز جدید"))
+        self.btn_save.setText(_translate("password_dialog", "ذخیره"))
+        self.btn_exit.setText(_translate("password_dialog", "بیخیال"))
+
