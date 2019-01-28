@@ -6,11 +6,20 @@ class Database:
         self.conn = sqlite3.connect('db.sqlite3')
         self.cursor = self.conn.cursor()
         self.create_database()
+        self.create_admin_user()
 
     def create_database(self):
         self.cursor.execute("""create table IF NOT EXISTS products(id INTEGER PRIMARY KEY NOT NULL ,
                             name VARCHAR(60) NOT NULL , purchase_price INTEGER , sales_price INTEGER , 
                             percent INTEGER)""")
+        self.cursor.execute("""create table IF NOT EXISTS users(id INTEGER PRIMARY KEY NOT NULL ,
+                            username VARCHAR(20) NOT NULL , password VARCHAR(20) NOT NULL);""")
+
+    def create_admin_user(self):
+        data = self.cursor.execute("""select max(id) from users""").fetchone()
+        if data[0] is None:
+            self.cursor.execute("""insert into users VALUES (1, ?, ?);""",
+                                ('admin', '1234'))
 
     def insert(self, product):
         data = self.cursor.execute("""select max(id) from products""").fetchone()
@@ -49,3 +58,10 @@ class Database:
                                    WHERE id=?;""", (id,))
         data = data.fetchone()
         return data
+
+    def login(self, user):
+        data = self.cursor.execute("""select * from users WHERE username=? AND password=?;""",
+                                   (user[0], user[1],)).fetchone()
+        if data:
+            return True
+        return False
