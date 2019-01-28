@@ -1,11 +1,62 @@
 import sys
 from PyQt5 import QtWidgets, QtGui, QtCore
 from PyQt5.QtWidgets import *
+from GUI.UI_Files.login import Ui_login_dialog
 from GUI.UI_Files.add_product import Ui_Dialog_add
 from GUI.UI_Files.update_product import Ui_update_dialog
 from GUI.UI_Files.main_window import Ui_MainWindow
 from database.Database import Database
 from Models.Models import Product
+
+
+class LoginDialog(QDialog):
+    def __init__(self, mainwindow):
+        super(QDialog, self).__init__()
+
+        # Define the instance to access the the UI elements defined in
+        self._login_dialog = Ui_login_dialog()
+        self._login_dialog.setupUi(self)
+        self._login_dialog.retranslateUi(self)
+        self.mainwindow = mainwindow
+        self._login_dialog.txt_password.setEchoMode(QLineEdit.Password)  # mask password in the lineEdit
+        self.counter = 0
+
+        # Initialize some other variables.
+        #
+
+        # Connect button with methods.
+        self._connect()
+
+    def _connect(self):
+        self._login_dialog.btn_exit.clicked.connect(self.exit)
+        self._login_dialog.btn_login.clicked.connect(self.login)
+
+    def login(self):
+        global db
+        password = self._login_dialog.txt_password.text()
+        if password == '':
+            QMessageBox.information(self, 'خطا', "لطفا رمز عبور را وارد نمایید!",
+                                    QMessageBox.Ok, QMessageBox.Ok)
+            return
+
+        user = ('admin', password)
+        check = db.login(user)
+        if check:
+            self.mainwindow.show()
+            self.exit()
+        else:
+            self.counter += 1
+            if self.counter == 3:
+                QMessageBox.information(self, 'خطا', "تعداد تکرار اشتباه شما بیش از حد بود!",
+                                        QMessageBox.Ok, QMessageBox.Ok)
+                sys.exit()
+            QMessageBox.information(self, 'خطا', "رمز عبور معتبر نیست!",
+                                    QMessageBox.Ok, QMessageBox.Ok)
+            return
+
+    # method exit
+    def exit(self):
+        self.close()
 
 
 class AddDialog(QDialog):
@@ -153,6 +204,7 @@ class MainWindow(QMainWindow):
         self._window = Ui_MainWindow()
         self._window.setupUi(self)
         self._window.retranslateUi(self)
+        self._login_dialog = LoginDialog(self)
         self._add_dialog = AddDialog()
         self._update_dialog = None
 
@@ -172,7 +224,6 @@ class MainWindow(QMainWindow):
 
         # Connect button with methods.
         self._connect()
-
         self.search()
 
     def _connect(self):
@@ -186,6 +237,10 @@ class MainWindow(QMainWindow):
 
     def displayTime(self):
         self._window.lbl_datetime.setText(QtCore.QDateTime.currentDateTime().toString('hh:mm:ss'))
+
+    @property
+    def login_dialog(self):
+        return self._login_dialog
 
     def search(self):
         self._window.tableWidget.setRowCount(0)
@@ -243,5 +298,5 @@ class MainWindow(QMainWindow):
 db = Database()
 app = QApplication(sys.argv)
 window = MainWindow()
-window.show()
+window.login_dialog.show()
 app.exec_()
