@@ -2,6 +2,7 @@ import sys
 from PyQt5 import QtWidgets, QtGui, QtCore
 from PyQt5.QtWidgets import *
 from GUI.UI_Files.login import Ui_login_dialog
+from GUI.UI_Files.password_update import Ui_password_dialog
 from GUI.UI_Files.add_product import Ui_Dialog_add
 from GUI.UI_Files.update_product import Ui_update_dialog
 from GUI.UI_Files.main_window import Ui_MainWindow
@@ -53,6 +54,54 @@ class LoginDialog(QDialog):
             QMessageBox.information(self, 'خطا', "رمز عبور معتبر نیست!",
                                     QMessageBox.Ok, QMessageBox.Ok)
             return
+
+    # method exit
+    def exit(self):
+        self.close()
+
+
+class PasswordDialog(QDialog):
+    def __init__(self):
+        super(QDialog, self).__init__()
+
+        # Define the instance to access the the UI elements defined in
+        self._pass_dialog = Ui_password_dialog()
+        self._pass_dialog.setupUi(self)
+        self._pass_dialog.retranslateUi(self)
+
+        # Initialize some other variables.
+        #
+
+        # Connect button with methods.
+        self._connect()
+
+    def _connect(self):
+        self._pass_dialog.btn_exit.clicked.connect(self.exit)
+        self._pass_dialog.btn_save.clicked.connect(self.save)
+
+    def save(self):
+        global db
+        old_password = self._pass_dialog.txt_old_pass.text()
+        if old_password == '':
+            QMessageBox.information(self, 'خطا', "لطفا رمز عبور فعلی را وارد نمایید!",
+                                    QMessageBox.Ok, QMessageBox.Ok)
+            return
+        new_password = self._pass_dialog.txt_new_pass.text()
+        if new_password == '':
+            QMessageBox.information(self, 'خطا', "لطفا رمز عبور جدید را وارد نمایید!",
+                                    QMessageBox.Ok, QMessageBox.Ok)
+            return
+        user = ('admin', old_password)
+        check = db.login(user)
+        if check:
+            if len(new_password) < 6:
+                QMessageBox.information(self, 'خطا', "رمز عبور جدید باید بیشتر از 6 کاراکتر باشد!",
+                                        QMessageBox.Ok, QMessageBox.Ok)
+                return
+            db.update_password(new_password)
+            QMessageBox.information(self, 'رمز عبور', "رمز عبور با موفقیت تغییر پیدا کرد!",
+                                    QMessageBox.Ok, QMessageBox.Ok)
+            self.exit()
 
     # method exit
     def exit(self):
@@ -205,6 +254,7 @@ class MainWindow(QMainWindow):
         self._window.setupUi(self)
         self._window.retranslateUi(self)
         self._login_dialog = LoginDialog(self)
+        self._password_dialog = PasswordDialog()
         self._add_dialog = AddDialog()
         self._update_dialog = None
 
@@ -229,7 +279,7 @@ class MainWindow(QMainWindow):
     def _connect(self):
         self._window.txt_main_search_name.textChanged.connect(self.search)
         self._window.btn_main_refresh.clicked.connect(self.search)
-        self._window.menu_exit.triggered.connect(self.exit)
+        self._window.menu_pass_edit.triggered.connect(self.show_update_password)
         self._window.btn_main_exit.clicked.connect(self.exit)
         self._window.btn_main_add.clicked.connect(self.show_add_dialog)
         self._window.menu_add.triggered.connect(self.show_add_dialog)
@@ -289,6 +339,9 @@ class MainWindow(QMainWindow):
 
     def show_update_dialog(self):
         self._update_dialog.show()
+
+    def show_update_password(self):
+        self._password_dialog.show()
 
     # method exit
     def exit(self):
