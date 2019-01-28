@@ -59,9 +59,18 @@ class Database:
         data = data.fetchone()
         return data
 
+    ##################
+    # user methods
+    ##################
+
     def login(self, user):
         data = self.cursor.execute("""select * from users WHERE username=? AND password=?;""",
                                    (user[0], user[1],)).fetchone()
         if data:
             return True
         return False
+
+    def update_password(self, password):
+        self.cursor.execute("""update users Set password=? WHERE id=1;""",
+                            (password,))
+        self.conn.commit()
