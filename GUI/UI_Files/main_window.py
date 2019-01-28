@@ -150,9 +150,11 @@ class Ui_MainWindow(object):
         self.menu_add.setObjectName("menu_add")
         self.menu_update = QtWidgets.QAction(MainWindow)
         self.menu_update.setObjectName("menu_update")
+        self.menu_pass_edit = QtWidgets.QAction(MainWindow)
+        self.menu_pass_edit.setObjectName("menu_pass_edit")
         self.menu.addAction(self.menu_add)
         self.menu.addAction(self.menu_update)
-        self.menu_exit.addSeparator()
+        self.menu_exit.addAction(self.menu_pass_edit)
         self.menubar.addAction(self.menu.menuAction())
         self.menubar.addAction(self.menu_exit.menuAction())
 
@@ -179,8 +181,9 @@ class Ui_MainWindow(object):
         self.btn_main_update.setText(_translate("MainWindow", "ویرایش"))
         self.btn_main_exit.setText(_translate("MainWindow", "خروج"))
         self.menu.setTitle(_translate("MainWindow", "محصول"))
-        self.menu_exit.setTitle(_translate("MainWindow", "خروج"))
+        self.menu_exit.setTitle(_translate("MainWindow", "تنظیمات"))
         self.action_3.setText(_translate("MainWindow", "یسب"))
         self.menu_add.setText(_translate("MainWindow", "افزودن"))
         self.menu_update.setText(_translate("MainWindow", "بروزرسانی"))
+        self.menu_pass_edit.setText(_translate("MainWindow", "تغییر رمز عبور"))
 

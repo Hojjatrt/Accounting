@@ -11,7 +11,8 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_login_dialog(object):
     def setupUi(self, login_dialog):
         login_dialog.setObjectName("login_dialog")
-        login_dialog.resize(400, 293)
+        login_dialog.resize(400, 300)
+        login_dialog.setMinimumSize(QtCore.QSize(400, 300))
         login_dialog.setLayoutDirection(QtCore.Qt.RightToLeft)
         self.verticalLayout = QtWidgets.QVBoxLayout(login_dialog)
         self.verticalLayout.setObjectName("verticalLayout")

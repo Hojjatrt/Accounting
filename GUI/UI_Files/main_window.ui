@@ -264,9 +264,9 @@
    </widget>
    <widget class="QMenu" name="menu_exit">
     <property name="title">
-     <string>خروج</string>
+     <string>تنظیمات</string>
     </property>
-    <addaction name="separator"/>
+    <addaction name="menu_pass_edit"/>
    </widget>
    <addaction name="menu"/>
    <addaction name="menu_exit"/>
@@ -285,6 +285,11 @@
   <action name="menu_update">
    <property name="text">
     <string>بروزرسانی</string>
+   </property>
+  </action>
+  <action name="menu_pass_edit">
+   <property name="text">
+    <string>تغییر رمز عبور</string>
    </property>
   </action>
  </widget>
