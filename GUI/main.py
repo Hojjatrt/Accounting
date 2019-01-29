@@ -130,6 +130,8 @@ class AddDialog(QDialog):
         self._add_dialog.btn_add_save.clicked.connect(self.add_product)
         self._add_dialog.txt_purchase_price.textChanged.connect(self.txt_pprice_change)
         self._add_dialog.txt_sales_percent.textChanged.connect(self.txt_percent_change)
+        self._add_dialog.txt_sales_price.textChanged.connect(self.txt_sprice_change)
+        self._add_dialog.checkBox_accessories.toggled.connect(self.checked_change)
 
     def txt_pprice_change(self):
         p_price = self._add_dialog.txt_purchase_price.text()
@@ -140,6 +142,20 @@ class AddDialog(QDialog):
         percent = self._add_dialog.txt_sales_percent.text()
         if not percent.isnumeric():
             self._add_dialog.txt_sales_percent.setText(percent[:len(percent)-1])
+
+    def txt_sprice_change(self):
+        s_price = self._add_dialog.txt_sales_price.text()
+        if not s_price.isnumeric():
+            self._add_dialog.txt_purchase_price.setText(s_price[:len(s_price)-1])
+
+    def checked_change(self):
+        check = self._add_dialog.checkBox_accessories.isChecked()
+        if check:
+            self._add_dialog.txt_sales_price.setEnabled(True)
+            self._add_dialog.txt_sales_percent.setEnabled(False)
+        else:
+            self._add_dialog.txt_sales_price.setEnabled(False)
+            self._add_dialog.txt_sales_percent.setEnabled(True)
 
     def add_product(self):
         global db
@@ -153,23 +169,47 @@ class AddDialog(QDialog):
             QMessageBox.information(self, 'خطا', " قیمت خرید محصول باید وارد شود!",
                                     QMessageBox.Ok, QMessageBox.Ok)
             return
-        percent = self._add_dialog.txt_sales_percent.text()
-        if percent == '':
-            QMessageBox.information(self, 'خطا', "درصد فروش محصول باید وارد شود!",
+
+        check = self._add_dialog.checkBox_accessories.isChecked()
+        print(check)
+        s_price = 0
+        percent = 0
+        if check:
+            s_price = self._add_dialog.txt_sales_price.text()
+            if s_price == '':
+                QMessageBox.information(self, 'خطا', " قیمت فروش محصول باید وارد شود!",
+                                        QMessageBox.Ok, QMessageBox.Ok)
+                return
+        else:
+            percent = self._add_dialog.txt_sales_percent.text()
+            if percent == '':
+                QMessageBox.information(self, 'خطا', "درصد فروش محصول باید وارد شود!",
+                                        QMessageBox.Ok, QMessageBox.Ok)
+                return
+        try:
+            p_price = int(p_price)
+            if check:
+                s_price = int(s_price)
+                acc = Product(name, p_price, accessories=check, sales_price=s_price)
+            else:
+                percent = int(percent)
+                acc = Product(name, p_price, percent=percent, accessories=check)
+
+            acc.insert(db)
+            QMessageBox.information(self, 'افزودن', "محصول با موفقیت افزوده شد!",
+                                    QMessageBox.Ok, QMessageBox.Ok)
+
+            self._add_dialog.txt_product_name.setText('')
+            self._add_dialog.txt_sales_percent.setText('')
+            self._add_dialog.txt_purchase_price.setText('')
+            self._add_dialog.txt_sales_price.setText('')
+            self._add_dialog.checkBox_accessories.setChecked(False)
+            self.checked_change()
+            self._add_dialog.txt_product_name.setFocus()
+        except:
+            QMessageBox.information(self, 'خطا', "خطا!",
                                     QMessageBox.Ok, QMessageBox.Ok)
             return
-        p_price = int(p_price)
-        percent = int(percent)
-
-        acc = Product(name, p_price, percent=percent)
-        acc.insert(db)
-        QMessageBox.information(self, 'افزودن', "محصول با موفقیت افزوده شد!",
-                                QMessageBox.Ok, QMessageBox.Ok)
-
-        self._add_dialog.txt_product_name.setText('')
-        self._add_dialog.txt_sales_percent.setText('')
-        self._add_dialog.txt_purchase_price.setText('')
-        self._add_dialog.txt_product_name.setFocus()
 
     # method exit
     def exit(self):
@@ -192,6 +232,9 @@ class UpdateDialog(QDialog):
         self._update_dialog.txt_purchase_price.setText(str(product.purchase_price))
         self._update_dialog.txt_sales_percent.setText(str(product.percent))
         self._update_dialog.txt_sales_price.setText(str(product.sales_price))
+        self._update_dialog.checkBox_accessories.setChecked(product.accessories)
+
+        self.checked_change()
 
         # Connect button with methods.
         self._connect()
@@ -201,6 +244,8 @@ class UpdateDialog(QDialog):
         self._update_dialog.btn_update.clicked.connect(self.update_product)
         self._update_dialog.txt_purchase_price.textChanged.connect(self.txt_pprice_change)
         self._update_dialog.txt_sales_percent.textChanged.connect(self.txt_percent_change)
+        self._update_dialog.txt_sales_price.textChanged.connect(self.txt_sprice_change)
+        self._update_dialog.checkBox_accessories.toggled.connect(self.checked_change)
 
     def txt_pprice_change(self):
         p_price = self._update_dialog.txt_purchase_price.text()
@@ -211,6 +256,20 @@ class UpdateDialog(QDialog):
         percent = self._update_dialog.txt_sales_percent.text()
         if not percent.isnumeric():
             self._update_dialog.txt_sales_percent.setText(percent[:len(percent)-1])
+
+    def txt_sprice_change(self):
+        s_price = self._update_dialog.txt_sales_price.text()
+        if not s_price.isnumeric():
+            self._update_dialog.txt_purchase_price.setText(s_price[:len(s_price)-1])
+
+    def checked_change(self):
+        check = self._update_dialog.checkBox_accessories.isChecked()
+        if check:
+            self._update_dialog.txt_sales_price.setEnabled(True)
+            self._update_dialog.txt_sales_percent.setEnabled(False)
+        else:
+            self._update_dialog.txt_sales_price.setEnabled(False)
+            self._update_dialog.txt_sales_percent.setEnabled(True)
 
     def update_product(self):
         global db
@@ -224,23 +283,40 @@ class UpdateDialog(QDialog):
             QMessageBox.information(self, 'خطا', " قیمت خرید محصول باید وارد شود!",
                                     QMessageBox.Ok, QMessageBox.Ok)
             return
-        percent = self._update_dialog.txt_sales_percent.text()
-        if percent == '':
-            QMessageBox.information(self, 'خطا', "درصد فروش محصول باید وارد شود!",
+        check = self._update_dialog.checkBox_accessories.isChecked()
+        if check:
+            s_price = self._update_dialog.txt_sales_price.text()
+            if s_price == '':
+                QMessageBox.information(self, 'خطا', " قیمت فروش محصول باید وارد شود!",
+                                        QMessageBox.Ok, QMessageBox.Ok)
+                return
+        else:
+            percent = self._update_dialog.txt_sales_percent.text()
+            if percent == '':
+                QMessageBox.information(self, 'خطا', "درصد فروش محصول باید وارد شود!",
+                                        QMessageBox.Ok, QMessageBox.Ok)
+                return
+        try:
+            p_price = int(p_price)
+            if check:
+                s_price = int(s_price)
+                acc = Product(name, p_price, accessories=check, sales_price=s_price)
+            else:
+                percent = int(percent)
+                acc = Product(name, p_price, percent=percent, accessories=check)
+
+            response = QMessageBox.question(self, 'ویرایش', "از ویرایش محصول مطمئن هستید؟",
+                                            QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+            if response == QMessageBox.Yes:
+                acc.id = int(self._update_dialog.txt_product_id.text())
+                acc.update(db)
+
+                QMessageBox.question(self, 'ویرایش', "محصول با موفقیت ویرایش شد!",
+                                     QMessageBox.Ok, QMessageBox.Ok)
+                self.exit()
+        except:
+            QMessageBox.information(self, 'خطا', "خطا!",
                                     QMessageBox.Ok, QMessageBox.Ok)
-            return
-        p_price = int(p_price)
-        percent = int(percent)
-
-        response = QMessageBox.question(self, 'ویرایش', "از ویرایش محصول مطمئن هستید؟",
-                                        QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
-        if response == QMessageBox.Yes:
-            acc = Product(name=name, purchase_price=p_price, percent=percent)
-            acc.id = int(self._update_dialog.txt_product_id.text())
-            acc.update(db)
-
-            QMessageBox.question(self, 'ویرایش', "محصول با موفقیت ویرایش شد!",
-                                 QMessageBox.Ok, QMessageBox.Ok)
             self.exit()
 
     # method exit
@@ -270,6 +346,7 @@ class MainWindow(QMainWindow):
         header.setSectionResizeMode(2, QtWidgets.QHeaderView.Stretch)
         header.setSectionResizeMode(3, QtWidgets.QHeaderView.ResizeToContents)
         header.setSectionResizeMode(4, QtWidgets.QHeaderView.Stretch)
+        header.setSectionResizeMode(5, QtWidgets.QHeaderView.ResizeToContents)
 
         self.timer = QtCore.QTimer()
         self.timer.setInterval(1000)
@@ -278,11 +355,11 @@ class MainWindow(QMainWindow):
 
         # Connect button with methods.
         self._connect()
-        self.search()
+        self.search_show()
 
     def _connect(self):
-        self._window.txt_main_search_name.textChanged.connect(self.search)
-        self._window.btn_main_refresh.clicked.connect(self.search)
+        self._window.txt_main_search_name.textChanged.connect(self.search_show)
+        self._window.btn_main_refresh.clicked.connect(self.search_show)
         self._window.menu_pass_edit.triggered.connect(self.show_update_password)
         self._window.btn_main_exit.clicked.connect(self.exit)
         self._window.btn_main_add.clicked.connect(self.show_add_dialog)
@@ -296,31 +373,26 @@ class MainWindow(QMainWindow):
     def login_dialog(self):
         return self._login_dialog
 
-    def search(self):
+    def search_show(self):
         self._window.tableWidget.setRowCount(0)
         global db
         text = self._window.txt_main_search_name.text()
         if text == '':
             data = db.select()
-            for d in data:
-                self.table_rows = self._window.tableWidget.rowCount()
-                self._window.tableWidget.insertRow(self.table_rows)
-                self._window.tableWidget.setItem(self.table_rows, 0, QTableWidgetItem(d[1]))
-                self._window.tableWidget.setItem(self.table_rows, 1, QTableWidgetItem(str(d[0])))
-                self._window.tableWidget.setItem(self.table_rows, 2, QTableWidgetItem(str(d[2])))
-                self._window.tableWidget.setItem(self.table_rows, 3, QTableWidgetItem(str(d[4])))
-                self._window.tableWidget.setItem(self.table_rows, 4, QTableWidgetItem(str(d[3])))
-
         else:
             data = db.select(text)
-            for d in data:
-                self.table_rows = self._window.tableWidget.rowCount()
-                self._window.tableWidget.insertRow(self.table_rows)
-                self._window.tableWidget.setItem(self.table_rows, 0, QTableWidgetItem(d[1]))
-                self._window.tableWidget.setItem(self.table_rows, 1, QTableWidgetItem(str(d[0])))
-                self._window.tableWidget.setItem(self.table_rows, 2, QTableWidgetItem(str(d[2])))
-                self._window.tableWidget.setItem(self.table_rows, 3, QTableWidgetItem(str(d[4])))
-                self._window.tableWidget.setItem(self.table_rows, 4, QTableWidgetItem(str(d[3])))
+        for d in data:
+            self.table_rows = self._window.tableWidget.rowCount()
+            self._window.tableWidget.insertRow(self.table_rows)
+            self._window.tableWidget.setItem(self.table_rows, 0, QTableWidgetItem(d[1]))
+            self._window.tableWidget.setItem(self.table_rows, 1, QTableWidgetItem(str(d[0])))
+            self._window.tableWidget.setItem(self.table_rows, 2, QTableWidgetItem(str(d[2])))
+            self._window.tableWidget.setItem(self.table_rows, 3, QTableWidgetItem(str(d[4])))
+            self._window.tableWidget.setItem(self.table_rows, 4, QTableWidgetItem(str(d[3])))
+            if d[5]:
+                self._window.tableWidget.setItem(self.table_rows, 5, QTableWidgetItem('***'))
+            else:
+                self._window.tableWidget.setItem(self.table_rows, 5, QTableWidgetItem(''))
 
     def update_product(self):
         global db
