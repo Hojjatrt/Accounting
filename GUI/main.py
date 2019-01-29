@@ -1,3 +1,5 @@
+from PyQt5 import sip  #  import just for build exe file
+
 import sys
 from PyQt5 import QtWidgets, QtGui, QtCore
 from PyQt5.QtWidgets import *
@@ -23,7 +25,7 @@ class LoginDialog(QDialog):
         self.counter = 0
 
         # Initialize some other variables.
-        #
+        self.setWindowIcon(QtGui.QIcon('icons/icons.png'))
 
         # Connect button with methods.
         self._connect()
@@ -70,7 +72,7 @@ class PasswordDialog(QDialog):
         self._pass_dialog.retranslateUi(self)
 
         # Initialize some other variables.
-        #
+        self.setWindowIcon(QtGui.QIcon('icons/icons.png'))
 
         # Connect button with methods.
         self._connect()
@@ -118,7 +120,7 @@ class AddDialog(QDialog):
         self._add_dialog.retranslateUi(self)
 
         # Initialize some other variables.
-        #
+        self.setWindowIcon(QtGui.QIcon('icons/icons.png'))
 
         # Connect button with methods.
         self._connect()
@@ -184,6 +186,7 @@ class UpdateDialog(QDialog):
         self._update_dialog.retranslateUi(self)
 
         # Initialize textbox's text
+        self.setWindowIcon(QtGui.QIcon('icons/icons.png'))
         self._update_dialog.txt_product_id.setText(str(product.id))
         self._update_dialog.txt_product_name.setText(str(product.name))
         self._update_dialog.txt_purchase_price.setText(str(product.purchase_price))
@@ -259,6 +262,7 @@ class MainWindow(QMainWindow):
         self._update_dialog = None
 
         # Initialize some other variables.
+        self.setWindowIcon(QtGui.QIcon('icons/icons.png'))
         self.table_rows = self._window.tableWidget.rowCount()
         header = self._window.tableWidget.horizontalHeader()
         header.setSectionResizeMode(0, QtWidgets.QHeaderView.Stretch)
