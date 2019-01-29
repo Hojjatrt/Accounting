@@ -25,6 +25,9 @@
   <property name="layoutDirection">
    <enum>Qt::RightToLeft</enum>
   </property>
+  <property name="documentMode">
+   <bool>false</bool>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
@@ -190,6 +193,11 @@
         <string>قیمت فروش</string>
        </property>
       </column>
+      <column>
+       <property name="text">
+        <string>ادوات</string>
+       </property>
+      </column>
      </widget>
     </item>
     <item>
@@ -241,6 +249,27 @@
       </item>
      </layout>
     </item>
+    <item>
+     <widget class="QLabel" name="lbl_datetime_2">
+      <property name="font">
+       <font>
+        <family>Arial</family>
+        <pointsize>8</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>پشتیبانی : رأفت 09150352682</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+      <property name="wordWrap">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -260,7 +289,6 @@
      <string>محصول</string>
     </property>
     <addaction name="menu_add"/>
-    <addaction name="menu_update"/>
    </widget>
    <widget class="QMenu" name="menu_exit">
     <property name="title">
