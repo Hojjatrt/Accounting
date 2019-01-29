@@ -3,7 +3,7 @@ import sqlite3
 
 class Database:
     def __init__(self):
-        self.conn = sqlite3.connect('db.sqlite3')
+        self.conn = sqlite3.connect('database\db.sqlite3')
         self.cursor = self.conn.cursor()
         self.create_database()
         self.create_admin_user()
@@ -11,7 +11,7 @@ class Database:
     def create_database(self):
         self.cursor.execute("""create table IF NOT EXISTS products(id INTEGER PRIMARY KEY NOT NULL ,
                             name VARCHAR(60) NOT NULL , purchase_price INTEGER , sales_price INTEGER , 
-                            percent INTEGER)""")
+                            percent INTEGER , accessories Boolean)""")
         self.cursor.execute("""create table IF NOT EXISTS users(id INTEGER PRIMARY KEY NOT NULL ,
                             username VARCHAR(20) NOT NULL , password VARCHAR(20) NOT NULL);""")
 
@@ -27,15 +27,18 @@ class Database:
             id = int(data[0]) + 1
         else:
             id = 1
-        self.cursor.execute("""insert into products VALUES (?, ?, ?, ?, ?);""",
-                            (id, product.name, product.purchase_price, product.sales_price, product.percent))
+        self.cursor.execute("""insert into products VALUES (?, ?, ?, ?, ?, ?);""",
+                            (id, product.name, product.purchase_price, product.sales_price, product.percent,
+                             product.accessories))
         product.id = id
+        del product
         self.conn.commit()
 
     def update(self, product):
-        self.cursor.execute("""update products Set name=? , purchase_price=? , sales_price=? , percent=?
-                            WHERE id=?;""", (product.name, product.purchase_price,
-                                             product.sales_price, product.percent, product.id))
+        self.cursor.execute("""update products Set name=? , purchase_price=? , sales_price=? , percent=? ,
+                            accessories=? WHERE id=?;""",
+                            (product.name, product.purchase_price, product.sales_price, product.percent,
+                             product.accessories, product.id))
         self.conn.commit()
 
     def delete(self, product):
